@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -28,7 +29,7 @@ def topic(request, topic_id):
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
-@login_required   
+@login_required
 def new_topic(request):
     """Add a new topic."""
     if request.method != 'POST':
@@ -41,8 +42,11 @@ def new_topic(request):
             new_topic = form.save(commit=False)
             new_topic.owner = request.user
             new_topic.save()
-            form.save()
             return redirect(reverse('learning_logs:topics'))
+    
+    context = {'form': form}
+    return render(request, 'learning_logs/new_topic.html', context)
+
     
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
@@ -87,6 +91,18 @@ def edit_entry(request, entry_id):
     
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+@login_required
+def delete_topic(request, topic_id):
+    topic = get_object_or_404(Topic, id=topic_id)
+    if topic.owner != request.user:
+        raise Http404
+    if request.method == 'POST':
+        topic.delete()
+        return redirect(reverse('learning_logs:topics'))
+    return redirect(reverse('learning_logs:topics'))
+
 
 
 

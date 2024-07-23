@@ -3,19 +3,22 @@
 <h1>Topics</h1>
 {% endblock header %}
 
-{%block content%}
-
-
+{% block content %}
 <ul>
-    {%for topic in topics%}
+    {% for topic in topics %}
     <li>
         <h3>
-        <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+            <!-- Delete Button -->
+            <form action="{% url 'learning_logs:delete_topic' topic.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this topic?');">Delete</button>
+            </form>
         </h3>
     </li>
-    {%empty%}
+    {% empty %}
     <li>No topics have been added yet.</li>
-    {%endfor%}
+    {% endfor %}
 </ul>
 
 <a href="{% url 'learning_logs:new_topic' %}">Add a new topic:</a>
