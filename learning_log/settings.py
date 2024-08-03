@@ -1,3 +1,9 @@
+import os
+import dj_database_url
+from pathlib import Path
+
+
+
 """
 Django settings for learning_log project.
 
@@ -10,9 +16,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import os
-import dj_database_url
-from pathlib import Path
 
 
 
