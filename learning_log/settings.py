@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$x4fv9$h&=a8u92)y%c4kyvx9e^$^wvp+mls75j-8($459161e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'learning_log.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://treasureanele:uRAeruyLTva0QZih4YBLNoZ6F9peK15i@dpg-cqn5l6qj1k6c73am6tgg-a.oregon-postgres.render.com/learning_log_db_0lk9',
+        default='postgresql://postgres:postgres@localhost:5432/learning_log',
         conn_max_age=600
     )
   }
